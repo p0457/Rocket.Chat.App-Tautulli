@@ -66,6 +66,8 @@ export class TautulliCommand implements ISlashCommand {
         'User-Agent': 'Rocket.Chat.App-tautulli',
       },
     });
+    console.log('****1', response);
+
     let text;
     if (response && response.content) {
       try {

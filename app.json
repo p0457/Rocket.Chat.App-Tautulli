@@ -4,8 +4,8 @@
     "requiredApiVersion": "^1.4.0",
     "iconFile": "icon.png",
     "author": {
-        "name": "Thomas Gardner <p0457@outlook.com>",
-        "homepage": "https://github.com/tgardner851/Rocket.Chat.App-tautulli",
+        "name": "Thomas Gardner",
+        "homepage": "https://github.com/tgardner851",
         "support": "https://github.com/tgardner851/Rocket.Chat.App-tautulli"
     },
     "name": "Tautulli",

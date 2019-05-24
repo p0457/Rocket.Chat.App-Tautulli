@@ -4,8 +4,8 @@ import { IRoom } from '@rocket.chat/apps-engine/definition/rooms';
 import { IUser } from '@rocket.chat/apps-engine/definition/users';
 
 export async function sendNotification(text: string, read: IRead, modify: IModify, user: IUser, room: IRoom): Promise<void> {
-  const icon = await read.getEnvironmentReader().getSettings().getValueById('plex_icon');
-  const username = await read.getEnvironmentReader().getSettings().getValueById('plex_name');
+  const icon = await read.getEnvironmentReader().getSettings().getValueById('tautulli_icon');
+  const username = await read.getEnvironmentReader().getSettings().getValueById('tautulli_name');
   const sender = await read.getUserReader().getById('rocket.cat');
 
   modify.getNotifier().notifyUser(user, modify.getCreator().startMessage({
@@ -19,8 +19,8 @@ export async function sendNotification(text: string, read: IRead, modify: IModif
 }
 
 export async function sendNotificationSingleAttachment(attachment: IMessageAttachment, read: IRead, modify: IModify, user: IUser, room: IRoom): Promise<void> {
-  const icon = await read.getEnvironmentReader().getSettings().getValueById('plex_icon');
-  const username = await read.getEnvironmentReader().getSettings().getValueById('plex_name');
+  const icon = await read.getEnvironmentReader().getSettings().getValueById('tautulli_icon');
+  const username = await read.getEnvironmentReader().getSettings().getValueById('tautulli_name');
   const sender = await read.getUserReader().getById('rocket.cat');
 
   modify.getNotifier().notifyUser(user, modify.getCreator().startMessage({
@@ -34,8 +34,8 @@ export async function sendNotificationSingleAttachment(attachment: IMessageAttac
 }
 
 export async function sendNotificationMultipleAttachments(attachments: Array<IMessageAttachment>, read: IRead, modify: IModify, user: IUser, room: IRoom): Promise<void> {
-  const icon = await read.getEnvironmentReader().getSettings().getValueById('plex_icon');
-  const username = await read.getEnvironmentReader().getSettings().getValueById('plex_name');
+  const icon = await read.getEnvironmentReader().getSettings().getValueById('tautulli_icon');
+  const username = await read.getEnvironmentReader().getSettings().getValueById('tautulli_name');
   const sender = await read.getUserReader().getById('rocket.cat');
 
   modify.getNotifier().notifyUser(user, modify.getCreator().startMessage({

@@ -1,13 +1,15 @@
 import { IHttp, IModify, IPersistence, IRead } from '@rocket.chat/apps-engine/definition/accessors';
 import { ISlashCommand, SlashCommandContext } from '@rocket.chat/apps-engine/definition/slashcommands';
 import { buildUrl } from '../lib/helpers/buildUrl';
+import * as msgHelper from '../lib/helpers/messageHelper';
 import { sendNotification } from '../lib/helpers/sendNotification';
 import { AppPersistence } from '../lib/persistence';
 import { TautulliApp } from '../TautulliApp';
 
 enum Command {
-    SetServer = 'set-server',
-    GetLibraries = 'get-libraries',
+  Help = 'help',
+  SetServer = 'set-server',
+  GetLibraries = 'get-libraries',
 }
 
 export class TautulliCommand implements ISlashCommand {
@@ -22,14 +24,33 @@ export class TautulliCommand implements ISlashCommand {
     const [command] = context.getArguments();
 
     switch (command) {
+      case Command.Help:
+        await this.processHelpCommand(context, read, modify, http, persis);
+        break;
       case Command.SetServer:
         await this.processSetServerCommand(context, read, modify, http, persis);
         break;
-
       case Command.GetLibraries:
         await this.processGetLibrariesCommand(context, read, modify, http, persis);
         break;
+      default:
+        await this.processHelpCommand(context, read, modify, http, persis);
+        break;
     }
+  }
+
+  private async processHelpCommand(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    await msgHelper.sendNotificationSingleAttachment({
+      collapsed: false,
+      color: '#e4a00e',
+      title: {
+        value: 'Tautulli App Help Commands',
+      },
+      text: '`/tautulli help`\n>Show this help menu\n'
+        + '`/tautulli set-server [SERVER URL] [API KEY]`\n>Sets the Server URL and API Key\n'
+        + '`/tautulli get-libraries`\n>Shows all Tautulli Libraries\n',
+    }, read, modify, context.getSender(), context.getRoom());
+    return;
   }
 
   private async processSetServerCommand(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {

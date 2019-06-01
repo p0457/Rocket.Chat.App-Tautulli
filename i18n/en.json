@@ -3,6 +3,12 @@
   "customize_name_description": "Choose the username that this app will post as.",
   "customize_icon": "Customize Icon",
   "customize_icon_description": "Choose the icon that is used for messages from this app.",
+  "customize_postto_recentlyadded": "Channel for Recently Added",
+  "customize_postto_recentlyadded_description": "Channel (or Username) to post Recently Added content to.",
+  "customize_postto_plexupdates": "Channel for Plex Updates",
+  "customize_postto_plexupdates_description": "Channel (or Username) to post Plex Updates content to.",
+  "customize_postto_tautulliupdates": "Channel for Tautulli Updates",
+  "customize_postto_tautulliupdates_description": "Channel (or Username) to post Tautulli Updates content to.",
   "slashcommand_params": "help",
   "slashcommand_description": "Shows all Tautulli App commands"
 }

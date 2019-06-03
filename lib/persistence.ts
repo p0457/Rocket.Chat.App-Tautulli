@@ -36,4 +36,20 @@ export class AppPersistence {
 
     return result ? (result as any).serverUrl : undefined;
   }
+
+  public async setRecentlyAddedKeywords(keywords): Promise<void> {
+    keywords = JSON.stringify(keywords);
+    const miscAssociation = new RocketChatAssociationRecord(RocketChatAssociationModel.MISC, 'tautulli-recentlyadded-keywords');
+
+    await this.persistence.updateByAssociations([miscAssociation], { keywords }, true);
+  }
+
+  public async getRecentlyAddedKeywords(): Promise<string | undefined> {
+    const miscAssociation = new RocketChatAssociationRecord(RocketChatAssociationModel.USER, 'tautulli-recentlyadded-keywords');
+
+    const [result] = await this.persistenceRead.readByAssociations([miscAssociation]);
+
+    const actualResult = result ? (result as any).keywords : undefined;
+    return JSON.parse(actualResult);
+  }
 }

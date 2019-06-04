@@ -102,6 +102,16 @@ export class TautulliApp extends App {
         endpoints: [new PlexUptimeWebhookEndpooint(this)],
       });
 
+      await configuration.settings.provideSetting({
+        id: 'tautulli_recentlyaddedkeywordslimit',
+        type: SettingType.STRING,
+        packageValue: '10',
+        required: false,
+        public: false,
+        i18nLabel: 'customize_recentlyaddedkeywordslimit',
+        i18nDescription: 'customize_recentlyaddedkeywordslimit_description',
+      });
+
       await configuration.slashCommands.provideSlashCommand(new TautulliCommand(this));
       await configuration.slashCommands.provideSlashCommand(new TautulliRecentlyAddedKeywordsCommand(this));
     }

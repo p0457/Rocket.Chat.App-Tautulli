@@ -54,8 +54,19 @@ export class TautulliRecentlyAddedKeywordsCommand implements ISlashCommand {
       }
 
       if (actualAction === 'add') {
+        const keywordsLimit = await read.getEnvironmentReader().getSettings().getValueById('tautulli_recentlyaddedkeywordslimit');
+        let keywordsLimitInt = -1;
+        if (keywordsLimit && !isNaN(keywordsLimit)) {
+          keywordsLimitInt = Number(keywordsLimit);
+        }
+
         if (!keyword) {
           await msgHelper.sendUsage(read, modify, context.getSender(), context.getRoom(), this.command, 'Keyword required for add action!');
+          return;
+        }
+        if (keywordsLimitInt > 0 && keywords.length >= keywordsLimitInt) {
+          // tslint:disable-next-line:max-line-length
+          await msgHelper.sendNotification('You\'ve reached the keyword limit! Please remove one before adding another.', read, modify, context.getSender(), context.getRoom());
           return;
         }
         const keywordExists = keywords.find((savedKeyword) => {

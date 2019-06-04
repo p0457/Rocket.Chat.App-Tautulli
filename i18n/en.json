@@ -11,6 +11,8 @@
   "customize_postto_tautulliupdates_description": "Channel (or Username) to post Tautulli Updates content to.",
   "customize_postto_plexuptime": "Channel for Plex Uptime Updates",
   "customize_postto_plexuptime_description": "Channel (or Username) to post Plex Uptime Updates to. (NOTE: Provide Tautulli JSON data a _type variable of serverdown,serverup,serverremotedown,serverremoteup)",
+  "customize_recentlyaddedkeywordslimit": "Recently Added Keywords Limit per User",
+  "customize_recentlyaddedkeywordslimit_description": "Amount of keywords to limit for /tautulli-recentlyadded-keywords (leave empty for unlimited *NOT RECOMMENDED*)",
   "slashcommand_params": "",
   "slashcommand_description": "Shows all Tautulli App commands",
   "slashcommand_recentlyaddedkeywords_params": "[add|remove|list] (keyword)",

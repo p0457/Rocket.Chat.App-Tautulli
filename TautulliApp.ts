@@ -8,6 +8,7 @@ import { SettingType } from '@rocket.chat/apps-engine/definition/settings';
 import { TautulliCommand } from './commands/TautulliCommand';
 import { TautulliRecentlyAddedKeywordsCommand } from './commands/TautulliRecentlyAddedKeywordsCommand';
 import { PlexUpdatesWebhookEndpooint } from './endpoints/plexUpdatesWebhook';
+import { PlexUptimeWebhookEndpooint } from './endpoints/plexUptimeWebhook';
 import { RecentlyAddedWebhookEndpooint } from './endpoints/recentlyAddedWebhook';
 import { TautulliUpdatesWebhookEndpooint } from './endpoints/tautulliUpdatesWebhook';
 
@@ -83,6 +84,22 @@ export class TautulliApp extends App {
         visibility: ApiVisibility.PRIVATE,
         security: ApiSecurity.UNSECURE,
         endpoints: [new TautulliUpdatesWebhookEndpooint(this)],
+      });
+
+      await configuration.settings.provideSetting({
+        id: 'tautulli_postto_plexuptime',
+        type: SettingType.STRING,
+        packageValue: '',
+        required: true,
+        public: false,
+        i18nLabel: 'customize_postto_plexuptime',
+        i18nDescription: 'customize_postto_plexuptime_description',
+      });
+
+      await configuration.api.provideApi({
+        visibility: ApiVisibility.PRIVATE,
+        security: ApiSecurity.UNSECURE,
+        endpoints: [new PlexUptimeWebhookEndpooint(this)],
       });
 
       await configuration.slashCommands.provideSlashCommand(new TautulliCommand(this));

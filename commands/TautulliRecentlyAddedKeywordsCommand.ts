@@ -6,8 +6,8 @@ import { TautulliApp } from '../TautulliApp';
 
 export class TautulliRecentlyAddedKeywordsCommand implements ISlashCommand {
   public command = 'tautulli-recentlyadded-keywords';
-  public i18nParamsExample = 'slashcommand_recentlyaddedkeywords-params';
-  public i18nDescription = 'slashcommand_recentlyaddedkeywords-description';
+  public i18nParamsExample = 'slashcommand_recentlyaddedkeywords_params';
+  public i18nDescription = 'slashcommand_recentlyaddedkeywords_description';
   public providesPreview = false;
 
   public constructor(private readonly app: TautulliApp) {}

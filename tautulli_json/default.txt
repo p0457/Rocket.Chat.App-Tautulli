@@ -1,4 +1,5 @@
 {
+  "_type": "",
   "tautulli_version": "{tautulli_version}",
   "tautulli_remote": "{tautulli_remote}",
   "tautulli_branch": "{tautulli_branch}",

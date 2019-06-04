@@ -31,7 +31,7 @@ export class TautulliApp extends App {
       await configuration.settings.provideSetting({
         id: 'tautulli_icon',
         type: SettingType.STRING,
-        packageValue: 'https://raw.githubusercontent.com/tgardner851/Rocket.Chat.App-tautulli/master/icon.jpg',
+        packageValue: 'https://raw.githubusercontent.com/tgardner851/Rocket.Chat.App-Tautulli/master/icon.png',
         required: true,
         public: false,
         i18nLabel: 'customize_icon',

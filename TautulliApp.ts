@@ -6,6 +6,7 @@ import { App } from '@rocket.chat/apps-engine/definition/App';
 import { IAppInfo } from '@rocket.chat/apps-engine/definition/metadata';
 import { SettingType } from '@rocket.chat/apps-engine/definition/settings';
 import { TautulliCommand } from './commands/TautulliCommand';
+import { TautulliRecentlyAddedKeywordsCommand } from './commands/TautulliRecentlyAddedKeywordsCommand';
 import { PlexUpdatesWebhookEndpooint } from './endpoints/plexUpdatesWebhook';
 import { RecentlyAddedWebhookEndpooint } from './endpoints/recentlyAddedWebhook';
 import { TautulliUpdatesWebhookEndpooint } from './endpoints/tautulliUpdatesWebhook';
@@ -84,6 +85,7 @@ export class TautulliApp extends App {
         endpoints: [new TautulliUpdatesWebhookEndpooint(this)],
       });
 
-      // await configuration.slashCommands.provideSlashCommand(new TautulliCommand(this));
+      await configuration.slashCommands.provideSlashCommand(new TautulliCommand(this));
+      await configuration.slashCommands.provideSlashCommand(new TautulliRecentlyAddedKeywordsCommand(this));
     }
 }

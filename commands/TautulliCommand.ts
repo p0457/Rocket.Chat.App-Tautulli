@@ -3,14 +3,9 @@ import { ISlashCommand, SlashCommandContext } from '@rocket.chat/apps-engine/def
 import { buildUrl } from '../lib/helpers/buildUrl';
 import * as msgHelper from '../lib/helpers/messageHelper';
 import { sendNotification } from '../lib/helpers/sendNotification';
+import usage from '../lib/helpers/usage';
 import { AppPersistence } from '../lib/persistence';
 import { TautulliApp } from '../TautulliApp';
-
-enum Command {
-  Help = 'help',
-  SetServer = 'set-server',
-  GetLibraries = 'get-libraries',
-}
 
 export class TautulliCommand implements ISlashCommand {
   public command = 'tautulli';
@@ -21,24 +16,28 @@ export class TautulliCommand implements ISlashCommand {
   public constructor(private readonly app: TautulliApp) {}
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-    const [command] = context.getArguments();
+    let text = '';
 
-    switch (command) {
-      case Command.Help:
-        await this.processHelpCommand(context, read, modify, http, persis);
-        break;
-      case Command.SetServer:
-        await this.processSetServerCommand(context, read, modify, http, persis);
-        break;
-      case Command.GetLibraries:
-        await this.processGetLibrariesCommand(context, read, modify, http, persis);
-        break;
-      default:
-        await this.processHelpCommand(context, read, modify, http, persis);
-        break;
+    for (const p in usage) {
+      if (usage.hasOwnProperty(p)) {
+        if (usage[p].command && usage[p].usage && usage[p].description) {
+          text += usage[p].usage + '\n>' + usage[p].description + '\n';
+        }
+      }
     }
+
+    await msgHelper.sendNotificationSingleAttachment({
+      collapsed: false,
+      color: '#e4a00e',
+      title: {
+        value: 'Commands',
+      },
+      text,
+    }, read, modify, context.getSender(), context.getRoom());
+    return;
   }
 
+  /*
   private async processHelpCommand(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
     await msgHelper.sendNotificationSingleAttachment({
       collapsed: false,
@@ -74,8 +73,8 @@ export class TautulliCommand implements ISlashCommand {
     const serverUrl = await persistence.getUserServerUrl(context.getSender());
     const apiKey = await persistence.getUserApiKey(context.getSender());
     if (!serverUrl || !apiKey) {
-      // tslint:disable-next-line:max-line-length
-      await sendNotification('Server URL or API Key not provided! Use command `/tautulli set-server [SERVER URL] [API KEY]`', read, modify, context.getSender(), context.getRoom());
+      await sendNotification('Server URL or API Key not provided! Use command `/tautulli set-server [SERVER URL] [API KEY]`',
+        read, modify, context.getSender(), context.getRoom());
       return;
     }
 
@@ -115,4 +114,5 @@ export class TautulliCommand implements ISlashCommand {
 
     await sendNotification(text, read, modify, context.getSender(), context.getRoom());
   }
+  */
 }

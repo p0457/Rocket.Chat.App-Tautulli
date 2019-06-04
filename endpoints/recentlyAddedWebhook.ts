@@ -74,7 +74,11 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
         let value = '';
         if (payload.air_date && payload.release_date) {
           title = 'Aired/Released';
-          value = payload.air_date + '\n' + payload.release_date;
+          if (payload.air_date === payload.release_date) {
+            value = payload.air_date;
+          } else {
+            value = payload.air_date + '\n' + payload.release_date;
+          }
         } else if (payload.air_date) {
           title = 'Aired';
           value = payload.air_date;
@@ -262,6 +266,43 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
 
       await modify.getCreator().finish(message);
 
-      return this.success();
+      try {
+        // Notify users if needed
+        const persistence = new AppPersistence(persis, read.getPersistenceReader());
+
+        const userNotifications = new Array();
+        const keywords = await persistence.getRecentlyAddedKeywords();
+        const sendNotifications = async () => {
+          await keywords.forEach(async (userKeyword) => {
+            if (attachmentTitle.toLowerCase().indexOf(userKeyword.keyword) !== -1) {
+              const dmRoom = await read.getRoomReader().getDirectByUsernames(['rocket.cat', userKeyword.userName]);
+              const existingNotification = userNotifications.find((userNotification) => {
+                return userNotification.userName === userKeyword.userName;
+              });
+              if (!existingNotification) {
+                userNotifications.push({
+                  userName: userKeyword.userName,
+                  room: dmRoom,
+                  keyword: userKeyword.keyword,
+                });
+                const userMessage = modify.getCreator().startMessage({
+                  room: dmRoom,
+                  sender,
+                  groupable: false,
+                  avatarUrl,
+                  alias,
+                  text: 'Notifying based on keyword `' + userKeyword.keyword + '`\n' + messageText,
+                }).setAttachments([attachment]);
+                await modify.getCreator().finish(userMessage);
+              }
+            }
+          });
+          return this.success();
+        };
+        return sendNotifications();
+      } catch (e) {
+        console.log('Failed to notify one or more users!', e);
+        return this.success();
+      }
   }
 }

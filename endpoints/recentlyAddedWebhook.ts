@@ -44,9 +44,12 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       }
 
       const media_type = payload.media_type;
+      // tslint:disable-next-line:max-line-length
+      const showAsPossiblyUpdated = media_type === 'show' || media_type === 'season' || media_type === 'episode' || media_type === 'artist' || media_type === 'album' || media_type === 'track';
 
       // MESSAGE TEXT
-      const messageText = `A new *${media_type}* was recently added to library *${payload.library_name}* on server *${payload.server_name}*.`;
+      // tslint:disable-next-line:max-line-length
+      const messageText = `A new *${media_type}* was recently added` + (showAsPossiblyUpdated === true ? ` or updated` : ``) + ` in library *${payload.library_name}* on server *${payload.server_name}*.`;
 
       // ATTACHMENT TITLE
       let attachmentTitle = 'Unknown!';

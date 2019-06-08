@@ -207,6 +207,21 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
           msg_processing_type: MessageProcessingType.SendMessage,
         });
       }
+      if (media_type === 'show' || media_type === 'season' || media_type === 'episode') {
+        const showName = payload.show_name;
+        let showNameShortened = showName;
+        if (showName.length > 20) {
+          showNameShortened = showName.substring(0, 20);
+        }
+        const command = `/tautulli-recentlyadded-keywords add ${showNameShortened}`;
+        actions.push({
+          type: MessageActionType.BUTTON,
+          text: 'Subscribe to Show',
+          msg: command,
+          msg_in_chat_window: true,
+          msg_processing_type: MessageProcessingType.RespondWithMessage,
+        });
+      }
 
       // ATTACHMENT TEXT
       let text = '';

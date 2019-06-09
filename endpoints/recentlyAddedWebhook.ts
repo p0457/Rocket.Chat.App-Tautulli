@@ -48,8 +48,12 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       const showAsPossiblyUpdated = media_type === 'show' || media_type === 'season' || media_type === 'episode' || media_type === 'artist' || media_type === 'album' || media_type === 'track';
 
       // MESSAGE TEXT
-      // tslint:disable-next-line:max-line-length
-      const messageText = `A new *${media_type}* was recently added` + (showAsPossiblyUpdated === true ? ` or updated` : ``) + ` in library *${payload.library_name}* on server *${payload.server_name}*.`;
+      let messageText = '';
+      if (showAsPossiblyUpdated === true) {
+        messageText = `A new *${media_type}* was recently added _(or updated)_ in library *${payload.library_name}* on server *${payload.server_name}*.`;
+      } else {
+        messageText = `A new *${media_type}* was recently added in library *${payload.library_name}* on server *${payload.server_name}*.`;
+      }
 
       // ATTACHMENT TITLE
       let attachmentTitle = 'Unknown!';

@@ -234,7 +234,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       let text = '';
 
       if (payload.tagline) {
-        text += '*Tagline: *' + payload.tagline + '\n';
+        text += '>' + payload.tagline + '\n';
       }
       if (payload.summary) {
         text += '*Summary: *' + payload.summary + '\n';

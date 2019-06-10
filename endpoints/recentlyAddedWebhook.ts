@@ -217,8 +217,8 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       if (media_type === 'show' || media_type === 'season' || media_type === 'episode') {
         const showName = payload.show_name;
         let showNameShortened = showName;
-        if (showName.length > 20) {
-          showNameShortened = showName.substring(0, 20);
+        if (showName.length > 30) {
+          showNameShortened = showName.substring(0, 30);
         }
         const command = `/tautulli-recentlyadded-keywords add ${showNameShortened}`;
         actions.push({

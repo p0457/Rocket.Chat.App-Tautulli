@@ -64,9 +64,9 @@ export class TautulliRecentlyAddedKeywordsCommand implements ISlashCommand {
           await msgHelper.sendUsage(read, modify, context.getSender(), context.getRoom(), this.command, 'Keyword required for add action!');
           return;
         }
-        if (keyword.length > 20) {
+        if (keyword.length > 30) {
           // tslint:disable-next-line:max-line-length
-          await msgHelper.sendNotification('Keyword too long! Please shorten it to 20 characters or less.', read, modify, context.getSender(), context.getRoom());
+          await msgHelper.sendNotification('Keyword too long! Please shorten it to 30 characters or less.', read, modify, context.getSender(), context.getRoom());
           return;
         }
         if (keywordsLimitInt > 0 && keywords.length >= keywordsLimitInt) {

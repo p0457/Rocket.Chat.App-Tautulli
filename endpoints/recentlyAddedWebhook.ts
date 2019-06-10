@@ -45,7 +45,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
 
       const media_type = payload.media_type;
       // tslint:disable-next-line:max-line-length
-      const showAsPossiblyUpdated = media_type === 'show' || media_type === 'season' || media_type === 'episode' || media_type === 'artist' || media_type === 'album' || media_type === 'track';
+      const showAsPossiblyUpdated = media_type === 'show' || media_type === 'season' || media_type === 'artist' || media_type === 'album';
 
       // MESSAGE TEXT
       let messageText = '';

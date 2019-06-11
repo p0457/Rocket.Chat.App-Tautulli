@@ -1,6 +1,21 @@
 # Tautulli
 Interact with Tautulli server(s) through API.
 
+Other Settings include:
+
+### Channel for Recently Added
+Channel (or Username) to post Recently Added content (all)
+### Channel for Plex Updates
+Channel (or Username) to post Plex Server Updates
+### Channel for Tautulli Updates
+Channel (or Username) to post Tautulli Updates
+### Channel for Plex Uptime Updates
+Channel (or Username) to post Plex Uptime Updates
+### Recently Added Keywords Limit per User
+Set a value to limit the amount of keywords to trigger on for Recently Added media.
+
+---
+
 ## Getting Started
 Now that you have generated a blank default Rocket.Chat App, what are you supposed to do next?
 Start developing! Open up your favorite editor, our recommended one is Visual Studio code,

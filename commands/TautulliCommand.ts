@@ -26,6 +26,8 @@ export class TautulliCommand implements ISlashCommand {
       }
     }
 
+    text += '\n\nThis application is not created by, affiliated with, or supported by Tautulli.';
+
     await msgHelper.sendNotificationSingleAttachment({
       collapsed: false,
       color: '#e4a00e',

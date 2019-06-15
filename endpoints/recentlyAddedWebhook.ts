@@ -149,7 +149,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       }
 
       // ATTACHMENT ACTIONS
-      const actions = new Array<IMessageAction>();
+      let actions = new Array<IMessageAction>();
 
       if (payload.plex_url) {
         actions.push({
@@ -307,6 +307,21 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                   room: dmRoom,
                   keyword: userKeyword.keyword,
                 });
+
+                // Remove 'Subscribe to Show' action and replace it with 'Unsubscribe to Show'
+                actions = actions.filter((action) => {
+                  return action.text !== 'Subscribe to Show';
+                });
+                const command = `/tautulli-recentlyadded-keywords remove ${userKeyword.keyword}`;
+                actions.push({
+                  type: MessageActionType.BUTTON,
+                  text: 'Unsubscribe from Show',
+                  msg: command,
+                  msg_in_chat_window: true,
+                  msg_processing_type: MessageProcessingType.RespondWithMessage,
+                });
+                attachment.actions = actions;
+
                 const userMessage = modify.getCreator().startMessage({
                   room: dmRoom,
                   sender,

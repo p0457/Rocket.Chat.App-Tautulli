@@ -317,7 +317,8 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                   msg_in_chat_window: true,
                   msg_processing_type: MessageProcessingType.RespondWithMessage,
                 });
-                attachment.actions = actionsWithoutSubscribe;
+                const newAttachment = attachment;
+                newAttachment.actions = actionsWithoutSubscribe;
 
                 const userMessage = modify.getCreator().startMessage({
                   room: dmRoom,
@@ -326,7 +327,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                   avatarUrl,
                   alias,
                   text: 'Notifying based on keyword `' + userKeyword.keyword + '`\n' + messageText,
-                }).setAttachments([attachment]);
+                }).setAttachments([newAttachment]);
                 await modify.getCreator().finish(userMessage);
               }
             }

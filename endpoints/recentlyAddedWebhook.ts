@@ -214,7 +214,11 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
           msg_processing_type: MessageProcessingType.SendMessage,
         });
       }
-      const actionsWithoutSubscribe = actions;
+      const actionsWithoutSubscribe = new Array<IMessageAction>();
+      // Copy array, not reference
+      actions.forEach((action) => {
+        actionsWithoutSubscribe.push(action);
+      });
       if (media_type === 'show' || media_type === 'season' || media_type === 'episode') {
         const showName = payload.show_name;
         let showNameShortened = showName;
@@ -317,8 +321,20 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                   msg_in_chat_window: true,
                   msg_processing_type: MessageProcessingType.RespondWithMessage,
                 });
-                const newAttachment = attachment;
-                newAttachment.actions = actionsWithoutSubscribe;
+                const newAttachment = {
+                  collapsed: false,
+                  color,
+                  imageUrl: payload.poster_url, // BIG Image
+                  thumbnailUrl: '', // SMALL Image
+                  title: {
+                    value: attachmentTitle,
+                    link: payload.plex_url,
+                  },
+                  fields,
+                  actions: actionsWithoutSubscribe,
+                  actionButtonsAlignment: MessageActionButtonsAlignment.HORIZONTAL,
+                  text,
+                };
 
                 const userMessage = modify.getCreator().startMessage({
                   room: dmRoom,

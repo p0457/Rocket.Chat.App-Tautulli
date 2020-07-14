@@ -21,9 +21,11 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
 
       let payload: any;
 
-      if (request.headers['content-type'] === 'application/x-www-form-urlencoded') {
-        payload = JSON.parse(request.content.payload);
-      } else {
+      try { 
+        payload = JSON.parse(request.content);
+        if (!payload) payload = request.content;
+      }
+      catch(e) {
         payload = request.content;
       }
 
@@ -46,6 +48,10 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       const media_type = payload.media_type;
       // tslint:disable-next-line:max-line-length
       const showAsPossiblyUpdated = media_type === 'show' || media_type === 'season' || media_type === 'artist' || media_type === 'album';
+
+      // POSTER TRANSFORM TO THUMBNAIL
+      const posterUrl = payload.poster_url;
+      let thumbUrl = posterUrl.replace('f_auto,q_auto','w_150');
 
       // MESSAGE TEXT
       let messageText = '';
@@ -270,8 +276,8 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       const attachment: IMessageAttachment = {
         collapsed: false,
         color,
-        imageUrl: payload.poster_url, // BIG Image
-        thumbnailUrl: '', // SMALL Image
+        imageUrl: posterUrl, // BIG Image
+        //thumbnailUrl: thumbUrl, // SMALL Image
         title: {
           value: attachmentTitle,
           link: payload.plex_url,
@@ -324,8 +330,8 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                 const newAttachment = {
                   collapsed: false,
                   color,
-                  imageUrl: payload.poster_url, // BIG Image
-                  thumbnailUrl: '', // SMALL Image
+                  imageUrl: posterUrl, // BIG Image
+                  //thumbnailUrl: thumbUrl, // SMALL Image
                   title: {
                     value: attachmentTitle,
                     link: payload.plex_url,

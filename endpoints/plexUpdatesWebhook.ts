@@ -28,13 +28,14 @@ export class PlexUpdatesWebhookEndpooint extends ApiEndpoint {
       }
 
       const avatarUrl = await read.getEnvironmentReader().getSettings().getValueById('tautulli_icon');
-      const alias = await read.getEnvironmentReader().getSettings().getValueById('tautulli_name');
+      const alias = await read.getEnvironmentReader().getSettings().getValueById('tautulli_alias');
       const sendTo = await read.getEnvironmentReader().getSettings().getValueById('tautulli_postto_plexupdates');
-      const sender = await read.getUserReader().getById('rocket.cat');
+      const senderName = await read.getEnvironmentReader().getSettings().getValueById('tautulli_sender');
+      const sender = await read.getUserReader().getById(senderName);
 
       let room;
       if (sendTo.startsWith('@')) {
-        room = await read.getRoomReader().getDirectByUsernames(['rocket.cat', sendTo.substring(1, sendTo.length)]);
+        room = await read.getRoomReader().getDirectByUsernames([senderName, sendTo.substring(1, sendTo.length)]);
       } else if (sendTo.startsWith('#')) {
         room = await read.getRoomReader().getByName(sendTo.substring(1, sendTo.length));
       }

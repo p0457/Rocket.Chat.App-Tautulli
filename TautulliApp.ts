@@ -19,13 +19,23 @@ export class TautulliApp extends App {
 
     protected async extendConfiguration(configuration: IConfigurationExtend, environmentRead: IEnvironmentRead): Promise<void> {
       await configuration.settings.provideSetting({
-        id: 'tautulli_name',
+        id: 'tautulli_sender',
+        type: SettingType.STRING,
+        packageValue: 'tautulli.bot',
+        required: true,
+        public: false,
+        i18nLabel: 'customize_sender',
+        i18nDescription: 'customize_sender_description',
+      });
+
+      await configuration.settings.provideSetting({
+        id: 'tautulli_alias',
         type: SettingType.STRING,
         packageValue: 'Tautulli',
         required: true,
         public: false,
-        i18nLabel: 'customize_name',
-        i18nDescription: 'customize_name_description',
+        i18nLabel: 'customize_alias',
+        i18nDescription: 'customize_alias_description',
       });
 
       await configuration.settings.provideSetting({

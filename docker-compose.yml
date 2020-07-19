@@ -3,6 +3,6 @@
 version: '1'
 
 services:
-  rocketchatapp_jitsi:
+  rocketchatapp_tautulli:
     image: rocketchatapp_tautulli:latest
     container_name: rocketchatapp_tautulli

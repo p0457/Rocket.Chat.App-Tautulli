@@ -277,7 +277,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
       const attachment: IMessageAttachment = {
         collapsed: false,
         color,
-        imageUrl: posterUrl, // BIG Image
+        imageUrl: posterUrl !== '' ? posterUrl : undefined, // BIG Image
         //thumbnailUrl: thumbUrl, // SMALL Image
         title: {
           value: attachmentTitle,
@@ -331,7 +331,7 @@ export class RecentlyAddedWebhookEndpooint extends ApiEndpoint {
                 const newAttachment = {
                   collapsed: false,
                   color,
-                  imageUrl: posterUrl, // BIG Image
+                  imageUrl: posterUrl !== '' ? posterUrl : undefined, // BIG Image
                   //thumbnailUrl: thumbUrl, // SMALL Image
                   title: {
                     value: attachmentTitle,
